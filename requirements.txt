@@ -1,0 +1,11 @@
+scikit-learn==1.5.2
+xgboost==2.1.1
+pandas==2.2.3
+numpy==2.1.2
+google-cloud-storage==2.18.2
+kubernetes==31.0.0
+joblib==1.4.2
+pytest==8.3.3
+pytest-mock==3.14.0
+psutil==6.1.0
+pyyaml==6.0.2

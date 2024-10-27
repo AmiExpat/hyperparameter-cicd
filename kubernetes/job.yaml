@@ -1,0 +1,23 @@
+# kubernetes/job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hyperparameter-tuning-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: hyperparameter-tuning
+        image: amibangladesh/hyperparameter:latest
+        volumeMounts:
+        - name: model-volume
+          mountPath: /app/models
+        - name: artifact-volume
+          mountPath: /app/artifacts
+      restartPolicy: Never
+      volumes:
+      - name: model-volume
+        emptyDir: {}
+      - name: artifact-volume
+        emptyDir: {}
+  backoffLimit: 4

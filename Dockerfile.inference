@@ -1,0 +1,17 @@
+# Dockerfile.inference
+FROM python:3.13-slim
+
+# Install dependencies
+RUN pip install --no-cache-dir flask joblib numpy
+
+# Copy the best model
+COPY models/best_model.joblib /app/models/best_model.joblib
+
+# Copy inference script
+COPY src/inference.py /app/inference.py
+
+# Expose the port
+EXPOSE 8080
+
+# Run the inference service
+CMD ["python", "/app/inference.py"]

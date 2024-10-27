@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hyperparameter-tuning-job-0
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      containers:
+      - env:
+        - name: N_ESTIMATORS
+          value: '50'
+        - name: MAX_DEPTH
+          value: '3'
+        - name: LEARNING_RATE
+          value: '0.01'
+        - name: SUBSAMPLE
+          value: '1.0'
+        image: amibangladesh/hyperparameter:latest
+        imagePullPolicy: IfNotPresent
+        name: hyperparameter-tuning
+        volumeMounts:
+        - mountPath: /app/models
+          name: model-volume
+        - mountPath: /app/artifacts
+          name: artifact-volume
+      restartPolicy: Never
+      volumes:
+      - emptyDir: {}
+        name: model-volume
+      - emptyDir: {}
+        name: artifact-volume

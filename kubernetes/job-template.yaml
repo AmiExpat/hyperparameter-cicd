@@ -1,0 +1,33 @@
+# kubernetes/job-template.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hyperparameter-tuning-job-{{JOB_ID}}
+spec:
+  template:
+    spec:
+      containers:
+      - name: hyperparameter-tuning
+        image: amibangladesh/hyperparameter:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: N_ESTIMATORS
+          value: "{{N_ESTIMATORS}}"
+        - name: MAX_DEPTH
+          value: "{{MAX_DEPTH}}"
+        - name: LEARNING_RATE
+          value: "{{LEARNING_RATE}}"
+        - name: SUBSAMPLE
+          value: "{{SUBSAMPLE}}"
+        volumeMounts:
+        - name: model-volume
+          mountPath: /app/models
+        - name: artifact-volume
+          mountPath: /app/artifacts
+      restartPolicy: Never
+      volumes:
+      - name: model-volume
+        emptyDir: {}
+      - name: artifact-volume
+        emptyDir: {}
+  backoffLimit: 4
